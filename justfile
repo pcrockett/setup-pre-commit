@@ -14,7 +14,7 @@ release:
 update:
     #!/usr/bin/env bash
     set -euo pipefail
-    repo=TODO
+    repo=pre-commit/pre-commit
     echo "getting latest release..."
     latest_tag="$(
         gh release list --exclude-drafts --exclude-pre-releases \
@@ -23,7 +23,7 @@ update:
             --jq '.[] | select(.isLatest).tagName'
     )"
     version="$(echo "${latest_tag}" | cut --characters 2-)"
-    artifact_name="TODO_${version}.tar.gz"
+    artifact_name="pre-commit-${version}.pyz"
     checksum="$(
         gh release view \
             "${latest_tag}" \
