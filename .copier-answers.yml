@@ -1,0 +1,11 @@
+_commit: 21f9d42
+_src_path: gh:pcrockett/template-setup-action
+action_description: Installs pre-commit in your GitHub Actions Workflows
+action_human_friendly_name: Setup pre-commit
+action_name: setup-pre-commit
+github_org: pcrockett
+tool_doc_url: https://pre-commit.com/
+tool_download_url: https://github.com/pre-commit/pre-commit/releases/download/v${VERSION}/pre-commit-${VERSION}.pyz
+tool_latest_checksum: ea8a0c84902e48c1875558f2f362ed8476773aa5fc8c16c5d8f2acc2a2830a65
+tool_latest_version: 4.6.0
+tool_name: pre-commit

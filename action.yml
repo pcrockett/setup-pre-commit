@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-action.json
+
+name: 'Setup pre-commit'
+description: 'Installs pre-commit in your GitHub Actions Workflows'
+inputs:
+  version:
+    description: 'Version to install, ex: 4.6.0'
+    default: '4.6.0'
+  checksum:
+    description: 'SHA256 checksum of download artifact'
+    default: 'ea8a0c84902e48c1875558f2f362ed8476773aa5fc8c16c5d8f2acc2a2830a65'
+
+runs:
+  using: "composite"
+  steps:
+    - id: cache
+      name: Cache
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
+      with:
+        path: ~/.cache/setup-pre-commit
+        key: setup-pre-commit-1|${{ inputs.version }}|${{ inputs.checksum }}
+
+    - name: Download pre-commit
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+        CHECKSUM: ${{ inputs.checksum }}
+      run: |
+        mkdir -p ~/.cache/setup-pre-commit
+        "${GITHUB_ACTION_PATH}/download-artifact.sh" \
+          "https://github.com/pre-commit/pre-commit/releases/download/v${VERSION}/pre-commit-${VERSION}.pyz" \
+          ~/.cache/setup-pre-commit/artifact.tar.gz \
+          "${CHECKSUM}"
+
+    - name: Install pre-commit
+      shell: bash
+      run: |
+        install_dir=~/.local/bin
+        mkdir -p "${install_dir}"
+        cd ~/.cache/setup-pre-commit
+        tar -xzf artifact.tar.gz
+        chmod +x pre-commit
+        mv pre-commit "${install_dir}"
+        echo "${install_dir}" >>"${GITHUB_PATH}"
