@@ -20,6 +20,12 @@ runs:
         path: ~/.cache/setup-pre-commit
         key: setup-pre-commit-1|${{ inputs.version }}|${{ inputs.checksum }}
 
+    # borrowed/modified the following from <https://github.com/pre-commit/action/blob/main/action.yml>
+    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
+      with:
+        path: ~/.cache/pre-commit
+        key: setup-pre-commit-hooks-1|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+
     - name: Download pre-commit
       if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
@@ -30,7 +36,7 @@ runs:
         mkdir -p ~/.cache/setup-pre-commit
         "${GITHUB_ACTION_PATH}/download-artifact.sh" \
           "https://github.com/pre-commit/pre-commit/releases/download/v${VERSION}/pre-commit-${VERSION}.pyz" \
-          ~/.cache/setup-pre-commit/artifact.tar.gz \
+          ~/.cache/setup-pre-commit/pre-commit.pyz \
           "${CHECKSUM}"
 
     - name: Install pre-commit
@@ -38,8 +44,4 @@ runs:
       run: |
         install_dir=~/.local/bin
         mkdir -p "${install_dir}"
-        cd ~/.cache/setup-pre-commit
-        tar -xzf artifact.tar.gz
-        chmod +x pre-commit
-        mv pre-commit "${install_dir}"
-        echo "${install_dir}" >>"${GITHUB_PATH}"
+        cp "${GITHUB_ACTION_PATH}/pre-commit.sh" "${install_dir}/pre-commit"
