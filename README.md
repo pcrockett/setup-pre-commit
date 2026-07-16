@@ -3,6 +3,8 @@
 easy way to install [pre-commit](https://pre-commit.com/) in your GitHub Actions
 workflows.
 
+also caches your pre-commit hooks environment to make subsequent runs faster.
+
 ```yaml
 jobs:
   build:
@@ -21,6 +23,9 @@ can specify your own version and checksum:
     version: '4.6.0'
     checksum: 'ea8a0c84902e48c1875558f2f362ed8476773aa5fc8c16c5d8f2acc2a2830a65'
 ```
+
+the checksum is computed for the `.pyz` zipapp artifact in
+[pre-commit's github releases](https://github.com/pre-commit/pre-commit/releases).
 
 **recommended:** run [pinact](https://github.com/suzuki-shunsuke/pinact) to pin your
 actions to a specific release. don't worry, if you're using Dependabot, Renovate, etc.,
