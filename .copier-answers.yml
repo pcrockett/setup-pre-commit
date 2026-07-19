@@ -1,4 +1,4 @@
-_commit: 69d971b
+_commit: ea9afaa
 _src_path: gh:pcrockett/template-setup-action
 action_description: Installs pre-commit in your GitHub Actions Workflows
 action_human_friendly_name: Setup pre-commit
