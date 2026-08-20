@@ -5,10 +5,10 @@ description: 'Installs pre-commit in your GitHub Actions Workflows'
 inputs:
   version:
     description: 'Version to install, ex: 4.6.0'
-    default: '4.6.1'
+    default: '4.6.2'
   checksum:
     description: 'SHA256 checksum of download artifact'
-    default: '6768cc8f4f810509b9272211c70ef7bb405c52da2ba81b673b2c361a72f1815d'
+    default: '43c09a73d82af8efff09900e60d76d67a2c3d990613c3c770b2b5c4418a16c4b'
 
 runs:
   using: "composite"
